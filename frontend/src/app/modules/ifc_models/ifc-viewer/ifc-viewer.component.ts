@@ -32,6 +32,7 @@ import {ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit} from 
 
 import {XeokitServer} from "../xeokit/xeokit-server";
 import {GonService} from "core-app/modules/common/gon/gon.service";
+import {XeokitViewerService} from "core-app/modules/bcf/services/xeokit-viewer.service";
 
 @Component({
   selector: 'ifc-viewer',
@@ -49,7 +50,8 @@ export class IFCViewerComponent implements OnInit, OnDestroy {
   private viewerUI:any;
 
   constructor(private Gon:GonService,
-              private elementRef:ElementRef) {
+              private elementRef:ElementRef,
+              private xeokitViewerService:XeokitViewerService) {
   }
 
   ngOnInit():void {
@@ -72,6 +74,7 @@ export class IFCViewerComponent implements OnInit, OnDestroy {
       });
 
       this.viewerUI.loadProject(this.Gon.get('ifc_models', 'projects') as any [0]["id"]);
+      this.xeokitViewerService.setViewer(this.viewerUI);
     });
   }
 
